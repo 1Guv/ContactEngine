@@ -1,31 +1,26 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { HttpClientTestingModule } from '@angular/common/http/testing'
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('AppComponent', () => {
+
+  let component: AppComponent;
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        AppComponent
-      ],
-    }).compileComponents();
+      imports: [HttpClientTestingModule, MatSnackBarModule, ReactiveFormsModule],
+      providers: [AppComponent],
+    })
+    component = TestBed.get(AppComponent);
   }));
 
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
+    expect(component).toBeTruthy();
   });
 
   it(`should have as title 'ContactEngineApp'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('ContactEngineApp');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('ContactEngineApp app is running!');
+    expect(component.title).toEqual('ContactEngineApp');
   });
 });
