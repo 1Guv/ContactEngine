@@ -31,7 +31,7 @@ export class AppComponent implements OnInit{
 
   ngOnInit() {
     this.getAllCountries();
-    this.getAllSMSProviders();
+    // this.getAllSMSProviders();
   }
 
   getAllCountries() {
@@ -41,31 +41,24 @@ export class AppComponent implements OnInit{
       })
   }
 
-  getAllSMSProviders() {
-    this.apiService.getSMSProviders()
-    .subscribe( providers => {
-      console.log('SMS Providers', providers);
-    })
-  }
+  // getAllSMSProviders() {
+  //   this.apiService.getSMSProviders()
+  //   .subscribe( providers => {
+  //     console.log('SMS Providers', providers);
+  //   })
+  // }
 
   addSMSProvider(provider: SMSProvider) {
     this.apiService.createSMSProvider(provider)
       .subscribe(resp => {
-
         if (resp === null) {
-          this._snackBar.open(`${provider.name} provider added`, 'close', {
-            duration: 5000,
-          })
+          this.snackBarMessage(`${provider.name} provider added`)
         }
-
       },
       err => {
         
         if (err.status === 400 && err.error === 'Provider already exists') {
-          let message: string = 'Provider already exists, please try again!'
-          this._snackBar.open(message, 'close', {
-            duration: 5000,
-          })
+          this.snackBarMessage('Provider already exists, please try again!');
         }
 
       })
@@ -75,5 +68,11 @@ export class AppComponent implements OnInit{
     if (this.form.valid) {
       this.addSMSProvider(this.form.value);
     }
+  }
+
+  snackBarMessage(message: string) {
+    this._snackBar.open(message, 'close', {
+      duration: 5000,
+    })
   }
 }
